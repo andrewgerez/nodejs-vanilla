@@ -21,7 +21,7 @@ export class Database {
   select(table) {
     const data = this.#database[table] ?? []
 
-    return data;
+    return data
   }
 
   insert(table, data) {
@@ -31,8 +31,17 @@ export class Database {
       this.#database[table] = [data]
     }
 
-    this.#persist();
+    this.#persist()
 
-    return data;
+    return data
+  }
+
+  delete(table, id) {
+    const rowIndex = this.#database[table].findIndex(row => row.id === id)
+
+    if (rowIndex > -1) {
+      this.#database[table].splice(rowIndex, 1)
+      this.#persist()
+    }
   }
 }
